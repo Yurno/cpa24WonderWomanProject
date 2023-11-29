@@ -365,12 +365,44 @@ public class TaskManagerController {
 
     @FXML
     private void handleSortButtonAction() {
-        sortTasksByPriority(inProgressTasksObservable);
-        sortTasksByPriority(completedTasksObservable);
+        quickSort(inProgressTasksObservable, 0, inProgressTasksObservable.size() - 1);
+        quickSort(completedTasksObservable, 0, completedTasksObservable.size() - 1);
+
+        // Update the TableViews to reflect the changes
+        inProgressTasksTable.refresh();
+        completedTasksTable.refresh();
     }
 
-    private void sortTasksByPriority(ObservableList<Task> tasks) {
-        FXCollections.sort(tasks, Comparator.comparingInt(Task::getPriority));
+    // will sort the list using the quicksort algorithm
+    private void quickSort(List<Task> list, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(list, begin, end);
+
+            quickSort(list, begin, partitionIndex-1);
+            quickSort(list, partitionIndex+1, end);
+        }
     }
+
+    private int partition(List<Task> list, int begin, int end) {
+        Task pivot = list.get(end);
+        int i = (begin-1);
+
+        for (int j = begin; j < end; j++) {
+            if (list.get(j).getPriority() <= pivot.getPriority()) {
+                i++;
+
+                Task swapTemp = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, swapTemp);
+            }
+        }
+
+        Task swapTemp = list.get(i+1);
+        list.set(i+1, list.get(end));
+        list.set(end, swapTemp);
+
+        return i+1;
+    }
+
 
 }
