@@ -17,7 +17,7 @@ public class TaskManager extends Application {
 
         stage.setScene(scene);
 
-        int width = 1000, height = 800;
+        int width = 1000, height = 600;
         stage.setTitle("Task Manager");
         stage.setWidth(width);
         stage.setHeight(height);

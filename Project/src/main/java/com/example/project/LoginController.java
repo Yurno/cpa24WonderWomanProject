@@ -64,6 +64,11 @@ public class LoginController {
 
                 Stage stage = (Stage) login.getScene().getWindow();
                 stage.setScene(new Scene(root));
+
+                // window size
+                stage.setWidth(1000);
+                stage.setHeight(800);
+
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();

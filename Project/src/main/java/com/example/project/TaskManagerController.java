@@ -48,7 +48,7 @@ public class TaskManagerController {
     @FXML
     private TextField assignedPersonField;
 
-    private Queue<Task> inProgressTasks = new LinkedList<>();
+    private PriorityQueue<Task> inProgressTasks = new PriorityQueue<>(Comparator.comparingInt(Task::getPriority));
     private Stack<Task> completedTasks = new Stack<>();
     private PriorityQueue<Task> priorityTasks = new PriorityQueue<>(Comparator.comparingInt(Task::getPriority));
     private Map<String, Task> allTasks = new HashMap<>();
@@ -215,8 +215,9 @@ public class TaskManagerController {
 
     // will add a task to the stack or in progress list
     public void addTask(Task task, boolean writeToDisk) {
-        inProgressTasksObservable.add(task); // adds all tasks to this list
+        inProgressTasks.add(task); // adds all tasks to this list
         allTasks.put(task.getId(), task);
+        updateTableViewFromQueue();
 
         if (task.getPriority() > 0) {
             priorityTasks.add(task);
@@ -239,6 +240,14 @@ public class TaskManagerController {
         }
     }
 
+    // to update the tableview when queue is updated
+    private void updateTableViewFromQueue() {
+        List<Task> taskList = new ArrayList<>(inProgressTasks);
+        ObservableList<Task> observableTaskList = FXCollections.observableArrayList(taskList);
+
+        inProgressTasksTable.setItems(observableTaskList);
+    }
+
 
     // will convert task to string for the txt file
     private String convertTaskToString(Task task) {
@@ -250,6 +259,7 @@ public class TaskManagerController {
         // will remove the task from the in progress tableview
         inProgressTasks.remove(task);
         inProgressTasksObservable.remove(task);
+        updateTableViewFromQueue();
 
         // will add the task to the completed tableview
         completedTasks.push(task);
