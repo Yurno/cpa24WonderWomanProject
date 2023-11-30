@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.util.Comparator;
 import javafx.collections.FXCollections;
@@ -81,7 +82,6 @@ public class TaskManagerController {
     private TableColumn<Task, String> completedDueDateColumn;
     @FXML
     private TableColumn<Task, String> completedAssignedPersonColumn;
-
     public void setUsername(String username) {
         this.username = username;
     }
