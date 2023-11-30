@@ -24,6 +24,7 @@
        <Button fx:id="finishTask" layoutX="125.0" layoutY="534.0" onAction="#handleFinishTaskButtonAction" text="Finish Task" />
        <Button fx:id="editTasks" layoutX="128.0" layoutY="461.0" onAction="#handleEditTaskButtonAction" text="Edit Tasks" />
        <Button fx:id="sortButton" layoutX="127.0" layoutY="587.0" onAction="#handleSortButtonAction" text="Sort Tasks" />
+       <Button fx:id="finishTopTask" layoutX="113.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleFinishTopTaskButton" text="Finish Top Task" />
        <Text layoutX="133.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task Name" />
       <Text layoutX="137.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Due Date" />
       <Text layoutX="128.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority Level" />

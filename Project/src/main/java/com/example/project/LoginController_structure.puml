@@ -1,0 +1,245 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "com.example.project.LoginController",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1322970774 { 
+   	label=example
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1138778773 { 
+   	label=project
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   LoginController393306072[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LoginController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   login: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   password: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   register: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   status: Text [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: TextField [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- checkCredentials(username: String, password: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleLoginButtonAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleRegisterButtonAction()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Task393306072[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Task</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   assignedPerson: StringProperty [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completed: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   description: StringProperty [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dueDate: StringProperty [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: StringProperty [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   priority: IntegerProperty [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ assignedPersonProperty(): StringProperty</TD></TR>
+<TR><TD ALIGN="LEFT" >+ descriptionProperty(): StringProperty</TD></TR>
+<TR><TD ALIGN="LEFT" >+ dueDateProperty(): StringProperty</TD></TR>
+<TR><TD ALIGN="LEFT" >+ idProperty(): StringProperty</TD></TR>
+<TR><TD ALIGN="LEFT" >+ priorityProperty(): IntegerProperty</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+TaskManagerController393306072[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)TaskManagerController</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   addTask: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   allTasks: Map&lt;String, Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   allTasksObservable: ObservableList&lt;Entry&lt;String, Task&gt;&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   assignedPersonField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedAssignedPersonColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedDescriptionColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedDueDateColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedIdColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedPriorityColumn: TableColumn&lt;Task, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedTasks: Stack&lt;Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedTasksObservable: ObservableList&lt;Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   completedTasksTable: TableView&lt;Task&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   dueDateField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   editTasks: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   finishTask: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressAssignedPersonColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressDescriptionColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressDueDateColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressIdColumn: TableColumn&lt;Task, String&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressPriorityColumn: TableColumn&lt;Task, Integer&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressTasks: Queue&lt;Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressTasksObservable: ObservableList&lt;Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   inProgressTasksTable: TableView&lt;Task&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   logout: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   priorityField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   priorityTasks: PriorityQueue&lt;Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   priorityTasksObservable: ObservableList&lt;Task&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   sortButton: Button [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   taskNameField: TextField [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   username: String [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addTask(task: Task, writeToDisk: boolean)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ assignPriorityToTask(taskId: String, priority: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ completeTask(task: Task)</TD></TR>
+<TR><TD ALIGN="LEFT" >- convertStringToTask(taskData: String): Task</TD></TR>
+<TR><TD ALIGN="LEFT" >- convertTaskToString(task: Task): String</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleAddTaskButtonAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleEditTaskButtonAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleFinishTaskButtonAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleLogout()</TD></TR>
+<TR><TD ALIGN="LEFT" >- handleSortButtonAction()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ initialize()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ loadTasksForUser(username: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- partition(list: List&lt;Task&gt;, begin: int, end: int): int</TD></TR>
+<TR><TD ALIGN="LEFT" >- quickSort(list: List&lt;Task&gt;, begin: int, end: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeTask(taskId: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >- saveAllTasksToFile()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+} 
+
+'edges    
+LoginController393306072 -> TaskManagerController393306072[label="handleLoginButtonAction() -> loadTasksForUser()"];
+TaskManagerController393306072 -> Task393306072[label="allTasks
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="allTasksObservable
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="completedAssignedPersonColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="completedDescriptionColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="completedDueDateColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="completedIdColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="completedPriorityColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="completedTasks
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="completedTasksObservable
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="completedTasksTable
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressAssignedPersonColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressDescriptionColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressDueDateColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressIdColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressPriorityColumn
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressTasks
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressTasksObservable
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="inProgressTasksTable
+[0..1]"];
+TaskManagerController393306072 -> Task393306072[label="priorityTasks
+[0..*]"];
+TaskManagerController393306072 -> Task393306072[label="priorityTasksObservable
+[0..*]"];
+    
+}
+@enduml

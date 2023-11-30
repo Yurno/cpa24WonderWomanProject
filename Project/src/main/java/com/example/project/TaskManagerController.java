@@ -35,6 +35,8 @@ public class TaskManagerController {
 //    private TableView finishedTasks;
     @FXML
     private Button editTasks;
+    @FXML
+    private Button finishTopTask;
 
     @FXML
     private TextField taskNameField;
@@ -89,7 +91,7 @@ public class TaskManagerController {
 
         // TODO
         // DEBUGGER REMEMBER TO REMOVE IN REAL RUN
-        inProgressTasksObservable.add(new Task("1", "Test Task", 1, "Test Person", "tomorrow"));
+        // inProgressTasksObservable.add(new Task("1", "Test Task", 1, "Test Person", "tomorrow"));
 
         inProgressDueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         inProgressIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -159,33 +161,59 @@ public class TaskManagerController {
         }
     }
 
+
+    // will deal witht he edit function button
     @FXML
     private void handleEditTaskButtonAction() {
         Task selectedTask = inProgressTasksTable.getSelectionModel().getSelectedItem();
         if (selectedTask != null) {
             try {
                 String newDescription = taskNameField.getText();
+                String newDueDate = dueDateField.getText();
                 int newPriority = Integer.parseInt(priorityField.getText());
                 String newAssignedPerson = assignedPersonField.getText();
 
-                // update the task properties
+                // updates the task properties
                 selectedTask.descriptionProperty().set(newDescription);
+                selectedTask.dueDateProperty().set(newDueDate);
                 selectedTask.priorityProperty().set(newPriority);
                 selectedTask.assignedPersonProperty().set(newAssignedPerson);
 
-                // clears the input fields after editing
+                // updates the task in all relevant lists
+                updateTaskInAllLists(selectedTask);
+
+                saveAllTasksToFile();
+
                 taskNameField.clear();
+                dueDateField.clear();
                 priorityField.clear();
                 assignedPersonField.clear();
             } catch (NumberFormatException e) {
-                e.printStackTrace(); // considers more user-friendly error handling
+                e.printStackTrace();
             }
         } else {
-            // handle case where no task is selected
         }
     }
 
+    // updates the task in the lists
+    private void updateTaskInAllLists(Task task) {
 
+        allTasks.put(task.getId(), task);
+
+        if (task.getPriority() > 0) {
+            priorityTasks.remove(task);
+            priorityTasks.add(task);
+            priorityTasksObservable.set(priorityTasksObservable.indexOf(task), task);
+        }
+
+        inProgressTasks.remove(task);
+        inProgressTasks.add(task);
+        inProgressTasksObservable.set(inProgressTasksObservable.indexOf(task), task);
+
+        inProgressTasksTable.refresh();
+    }
+
+    // will add a task to the stack or in progress list
     public void addTask(Task task, boolean writeToDisk) {
         inProgressTasksObservable.add(task); // adds all tasks to this list
         allTasks.put(task.getId(), task);
@@ -353,9 +381,9 @@ public class TaskManagerController {
 
         String[] parts = taskData.split(",");
         if (parts.length < 5) {
-            // Handle the error or log a warning
+            // handles the error or log a warning
             System.err.println("Invalid task data format: " + taskData);
-            return null; // or throw an exception
+            return null;
         }
 
         Task task = new Task(parts[0], parts[1], Integer.parseInt(parts[2]), parts[3], parts[4]);
@@ -368,7 +396,6 @@ public class TaskManagerController {
         quickSort(inProgressTasksObservable, 0, inProgressTasksObservable.size() - 1);
         quickSort(completedTasksObservable, 0, completedTasksObservable.size() - 1);
 
-        // Update the TableViews to reflect the changes
         inProgressTasksTable.refresh();
         completedTasksTable.refresh();
     }
@@ -403,6 +430,20 @@ public class TaskManagerController {
 
         return i+1;
     }
+
+    // will finisht the task at top fo the queue
+    @FXML
+    private void handleFinishTopTaskButton() {
+        if (!inProgressTasks.isEmpty()) {
+            Task topTask = inProgressTasks.poll();
+            if (topTask != null) {
+                completeTask(topTask);
+                // will save the changes to the text file
+                saveAllTasksToFile();
+            }
+        }
+    }
+
 
 
 }

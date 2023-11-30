@@ -1,0 +1,114 @@
+@startuml
+
+!define TextField javafx.scene.control.TextField
+!define Button javafx.scene.control.Button
+!define Text javafx.scene.text.Text
+!define FXMLLoader javafx.fxml.FXMLLoader
+!define Parent javafx.scene.Parent
+!define Scene javafx.scene.Scene
+!define Stage javafx.stage.Stage
+!define File java.io.File
+!define FileWriter java.io.FileWriter
+!define Scanner java.util.Scanner
+!define StringProperty javafx.beans.property.StringProperty
+!define IntegerProperty javafx.beans.property.IntegerProperty
+
+package "com.example.project" {
+  class LoginController {
+    - username: TextField
+    - password: TextField
+    - login: Button
+    - register: Button
+    - status: Text
+
+    + handleRegisterButtonAction()
+    + handleLoginButtonAction()
+    - checkCredentials(username: String, password: String): boolean
+  }
+
+  class Task {
+    - id: StringProperty
+    - description: StringProperty
+    - priority: IntegerProperty
+    - assignedPerson: StringProperty
+    - dueDate: StringProperty
+    - completed: boolean
+
+    + Task(id: String, description: String, priority: int, assignedPerson: String, dueDate: String)
+    + setCompleted(completed: boolean)
+    + isCompleted(): boolean
+    + dueDateProperty(): StringProperty
+    + getDueDate(): String
+    + setDueDate(dueDate: String)
+    + idProperty(): StringProperty
+    + getId(): String
+    + setId(id: String)
+    + descriptionProperty(): StringProperty
+    + getDescription(): String
+    + setDescription(description: String)
+    + priorityProperty(): IntegerProperty
+    + getPriority(): int
+    + setPriority(priority: int)
+    + assignedPersonProperty(): StringProperty
+    + getAssignedPerson(): String
+    + setAssignedPerson(assignedPerson: String)
+    + toString(): String
+  }
+
+  class TaskManager {
+    + start(stage: Stage)
+    + main(args: String[])
+  }
+
+  class TaskManagerController {
+    - sortButton: Button
+    - username: String
+    - logout: Button
+    - addTask: Button
+    - finishTask: Button
+    - editTasks: Button
+    - taskNameField: TextField
+    - dueDateField: TextField
+    - priorityField: TextField
+    - assignedPersonField: TextField
+    - inProgressTasks: Queue<Task>
+    - completedTasks: Stack<Task>
+    - priorityTasks: PriorityQueue<Task>
+    - allTasks: Map<String, Task>
+    - inProgressTasksObservable: ObservableList<Task>
+    - completedTasksObservable: ObservableList<Task>
+    - priorityTasksObservable: ObservableList<Task>
+    - allTasksObservable: ObservableList<Map.Entry<String, Task>>
+    - inProgressTasksTable: TableView<Task>
+    - inProgressIdColumn: TableColumn<Task, String>
+    - inProgressDescriptionColumn: TableColumn<Task, String>
+    - inProgressPriorityColumn: TableColumn<Task, Integer>
+    - inProgressAssignedPersonColumn: TableColumn<Task, String>
+    - inProgressDueDateColumn: TableColumn<Task, String>
+    - completedTasksTable: TableView<Task>
+    - completedIdColumn: TableColumn<Task, String>
+    - completedDescriptionColumn: TableColumn<Task, String>
+    - completedPriorityColumn: TableColumn<Task, Integer>
+    - completedDueDateColumn: TableColumn<Task, String>
+    - completedAssignedPersonColumn: TableColumn<Task, String>
+
+    + setUsername(username: String)
+    + initialize()
+    + handleLogout()
+    + handleAddTaskButtonAction()
+    + handleFinishTaskButtonAction()
+    + handleEditTaskButtonAction()
+    + addTask(task: Task, writeToDisk: boolean)
+    + convertTaskToString(task: Task): String
+    + completeTask(task: Task)
+    + saveAllTasksToFile()
+    + assignPriorityToTask(taskId: String, priority: int)
+    + removeTask(taskId: String)
+    + loadTasksForUser(username: String)
+    + handleSortButtonAction()
+    + quickSort(list: List<Task>, begin: int, end: int)
+    + partition(list: List<Task>, begin: int, end: int)
+  }
+}
+
+@enduml
