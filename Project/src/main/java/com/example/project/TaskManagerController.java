@@ -22,6 +22,13 @@ import java.util.*;
 public class TaskManagerController {
 
     @FXML
+    private Button refreshButton;
+
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
+    @FXML
     private Button sortButton;
     private String username;
     @FXML
@@ -111,6 +118,35 @@ public class TaskManagerController {
 
     }
 
+    // handles search button
+    @FXML
+    private void handleSearchButton() {
+        String searchQuery = searchField.getText();
+        List<Task> searchResults = linearSearchByAssignedPerson(searchQuery);
+
+        // Update the table view with the search results
+        inProgressTasksTable.setItems(FXCollections.observableArrayList(searchResults));
+    }
+
+    // will linear search the assigned person
+    private List<Task> linearSearchByAssignedPerson(String searchQuery) {
+        List<Task> resultList = new ArrayList<>();
+        searchQuery = searchQuery.toLowerCase();
+
+        // Convert PriorityQueue to a List for iteration
+        List<Task> taskList = new ArrayList<>(inProgressTasks);
+
+        for (Task task : taskList) {
+            if (task.getAssignedPerson().toLowerCase().contains(searchQuery)) {
+                resultList.add(task);
+            }
+        }
+
+        return resultList;
+    }
+
+
+
     // will handle the logout button
     @FXML
     private void handleLogout()
@@ -120,6 +156,10 @@ public class TaskManagerController {
             Parent root = loader.load();
 
             Stage stage = (Stage) logout.getScene().getWindow();
+
+            stage.setWidth(1000);
+            stage.setHeight(600);
+
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
@@ -453,7 +493,20 @@ public class TaskManagerController {
             }
         }
     }
+    // will handle refresh button
+    @FXML
+    private void handleRefreshButton() {
+        loadTasksToTableView();
+    }
 
+    // will load the items to tableview
+    private void loadTasksToTableView() {
+        List<Task> taskList = new ArrayList<>(inProgressTasks);
+        ObservableList<Task> observableTaskList = FXCollections.observableArrayList(taskList);
+
+        inProgressTasksTable.setItems(observableTaskList);
+        inProgressTasksTable.refresh();
+    }
 
 
 }
